@@ -20,7 +20,7 @@ export default function LoginPage() {
       }
 
       router.push("/dashboard");
-    } catch (err) {
+    } catch  {
       alert("Login failed");
     }
   };
