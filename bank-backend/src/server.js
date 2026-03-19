@@ -54,8 +54,8 @@ app.use(
 
     cookie: {
       httpOnly: true,
-      secure: false, // 👉 true in production (HTTPS)
-      sameSite: "lax", // default safe (overridden dynamically)
+      secure: true, // 👉 true in production (HTTPS)
+      sameSite: "none", // default safe (overridden dynamically)
     },
   })
 );
