@@ -10,16 +10,6 @@ import { USERS } from "../utils/userStore.js";
    🍪 APPLY COOKIE MODE
 ========================= */
 
-const applyCookieMode = (req) => {
-  if (SECURITY_MODE === "vulnerable") {
-    req.session.cookie.sameSite = "lax"; // for local dev
-    req.session.cookie.secure = false;
-  } else {
-    req.session.cookie.sameSite = "lax";
-    req.session.cookie.secure = false;
-  }
-};
-
 /* =========================
    🔐 LOGIN
 ========================= */
