@@ -28,7 +28,7 @@ app.use(
   cors({
     origin: [
   "http://localhost:3000",
-  "https://bank-app-for-csrf-attack-protection.vercel.app/"
+  "https://bank-app-for-csrf-attack-protection.vercel.app"
 ],
     credentials: true, // 🔥 MUST
   })
