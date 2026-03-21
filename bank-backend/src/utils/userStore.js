@@ -1,5 +1,8 @@
 export const USERS = {
-  alice: { balance: 1000 },
-  bob: { balance: 2000 },
-  attacker: { balance: 0 }, 
+  "sarvjeetswanshi25@gmail.com": { password: "123456", balance: 1000 },
+  "adityaspgm@gmail.com": { password: "123456", balance: 1000 },
+  "sarvjeet.s23@iiits.in": { password: "123456", balance: 1000 },
 };
+
+// Temporary OTP storage (in production, use Redis or database)
+export const OTP_STORE = {};

@@ -1,14 +1,16 @@
+import dotenv from "dotenv";
+
+// ⚠️ LOAD ENVIRONMENT VARIABLES FIRST before any other imports
+dotenv.config();
+
 import express from "express";
 import session from "express-session";
 import cors from "cors";
-import dotenv from "dotenv";
 import cookieParser from "cookie-parser";
 
 import authRoutes from "./routes/authRoutes.js";
 import bankRoutes from "./routes/bankRoutes.js";
 import adminRoutes from "./routes/adminRoutes.js";
-
-dotenv.config();
 
 const app = express();
 
@@ -27,7 +29,7 @@ app.use(cookieParser());
 app.use(
   cors({
     origin: [
-  "http://localhost:3000",
+  // "http://localhost:3000", // Commented for production
   "https://bank-app-for-csrf-attack-protection.vercel.app"
 ],
     credentials: true, // 🔥 MUST
@@ -53,14 +55,15 @@ app.set("trust proxy", 1);
 
 app.use(
   session({
-    secret: process.env.SESSION_SECRET,
+    secret: process.env.SESSION_SECRET || "dev-secret-key",
     resave: false,
-    saveUninitialized: false,
+    saveUninitialized: true, // Changed to true to ensure session is created
     proxy: true,
     cookie: {
       httpOnly: true,
-      secure: true, // 👉 true in production (HTTPS)
-      sameSite: "none", // default safe (overridden dynamically)
+      secure: false, // Set to false for local development (HTTP)
+      sameSite: "lax", // Changed from "none" for local development
+      maxAge: 24 * 60 * 60 * 1000, // 24 hours
     },
   })
 );

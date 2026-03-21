@@ -5,10 +5,10 @@ import { USERS } from "../utils/userStore.js";
 ========================= */
 
 export const getBalance = (req, res) => {
-  const username = req.session.user.username;
+  const email = req.session.user.email;
 
   res.json({
-    balance: USERS[username].balance,
+    balance: USERS[email].balance,
   });
 };
 
@@ -22,7 +22,7 @@ export const transfer = (req, res) => {
   const { amount, to } = req.body;
 
   const numAmount = Number(amount);
-  const sender = req.session.user.username;
+  const sender = req.session.user.email;
 
   if (!numAmount || numAmount <= 0) {
     return res.status(400).json({ message: "Invalid amount" });
