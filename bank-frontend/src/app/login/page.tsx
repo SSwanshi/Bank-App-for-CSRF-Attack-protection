@@ -3,6 +3,7 @@
 import { useState } from "react";
 import API from "../../utils/api";
 import { useRouter } from "next/navigation";
+import { AxiosError } from "axios";
 
 export default function LoginPage() {
   const [step, setStep] = useState("credentials"); // 'credentials' or 'otp'
@@ -33,8 +34,12 @@ export default function LoginPage() {
       if (res.data.requiresOTP) {
         setStep("otp");
       }
-    } catch (err: any) {
-      setError(err.response?.data?.message || "Login failed");
+    } catch (err: unknown) {
+      if (err instanceof AxiosError) {
+        setError(err.response?.data?.message || "Login failed");
+      } else {
+        setError("Login failed");
+      }
     } finally {
       setLoading(false);
     }
@@ -63,8 +68,12 @@ export default function LoginPage() {
       }
 
       router.push("/dashboard");
-    } catch (err: any) {
-      setError(err.response?.data?.message || "OTP verification failed");
+    } catch (err: unknown) {
+      if (err instanceof AxiosError) {
+        setError(err.response?.data?.message || "OTP verification failed");
+      } else {
+        setError("OTP verification failed");
+      }
     } finally {
       setLoading(false);
     }
@@ -82,8 +91,12 @@ export default function LoginPage() {
       await API.post("/auth/resend-otp", { email });
       setError(""); // Clear error on success
       alert("OTP resent successfully");
-    } catch (err: any) {
-      setError(err.response?.data?.message || "Failed to resend OTP");
+    } catch (err: unknown) {
+      if (err instanceof AxiosError) {
+        setError(err.response?.data?.message || "Failed to resend OTP");
+      } else {
+        setError("Failed to resend OTP");
+      }
     } finally {
       setLoading(false);
     }
@@ -151,7 +164,7 @@ export default function LoginPage() {
         {step === "otp" && (
           <>
             <p className="text-gray-600 text-sm mb-4 text-center">
-              We've sent a 6-digit OTP to <strong>{email}</strong>
+              We&apos;ve sent a 6-digit OTP to <strong>{email}</strong>
             </p>
 
             <div className="mb-4">
@@ -163,7 +176,7 @@ export default function LoginPage() {
                 placeholder="000000"
                 value={otp}
                 onChange={(e) => setOtp(e.target.value.slice(0, 6))}
-                maxLength="6"
+                maxLength={6}
                 className="w-full border border-gray-300 p-3 rounded text-center text-2xl letter-spacing font-bold text-black focus:outline-none focus:ring-2 focus:ring-blue-500"
                 disabled={loading}
               />

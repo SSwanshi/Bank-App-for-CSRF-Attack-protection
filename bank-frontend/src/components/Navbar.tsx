@@ -13,7 +13,7 @@ export default function Navbar() {
       try {
         const res = await API.get("/admin/mode");
         setMode(res.data.mode);
-      } catch (err) {
+      } catch {
         console.log("Error fetching mode");
       }
     };
