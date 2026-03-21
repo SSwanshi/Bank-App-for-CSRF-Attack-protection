@@ -1,7 +1,11 @@
 import dotenv from "dotenv";
 
 // ⚠️ LOAD ENVIRONMENT VARIABLES FIRST before any other imports
-dotenv.config();
+import path from "path";
+
+dotenv.config({
+  path: path.resolve(process.cwd(), "../.env")
+});
 
 import express from "express";
 import session from "express-session";
@@ -95,6 +99,7 @@ app.use((err, req, res, next) => {
 
 const PORT = process.env.PORT || 5000;
 
+
 app.listen(PORT, () => {
-  console.log(`🚀 Server running on port ${PORT}`);
+  console.log(`🚀 Server running on port ${PORT} ${process.env.EMAIL_USER}`);
 });
