@@ -34,7 +34,7 @@ export default function TransferForm({ csrfToken }: { csrfToken: string | null }
     <div className="mt-4 flex flex-col gap-2">
       <input
         type="text"
-        placeholder="Recipient (bob / attacker)"
+        placeholder="Recipient (use email: adityaspgm@gmail.com or sarvjeet.s23@iiits.in)"
         value={to}
         onChange={(e) => setTo(e.target.value)}
         className="border p-2"
