@@ -113,101 +113,121 @@ export default function LoginPage() {
   };
 
   return (
-    <div className="flex flex-col items-center justify-center h-screen bg-gray-100">
-      <div className="bg-white shadow-lg rounded-lg p-8 w-96">
-        <h1 className="text-3xl font-bold text-center mb-6">🏦 Bank Login</h1>
+    <div className="min-h-screen flex flex-col items-center justify-center p-4 bg-slate-50 overflow-hidden">
+      <div className="card w-full max-w-[440px] p-10 bg-white">
+        <div className="text-center mb-10">
+          <h2 className="text-sm font-semibold text-primary uppercase tracking-[0.2em] mb-2">Secure Portal</h2>
+          <h1 className="text-3xl font-bold text-slate-900 tracking-tight">SECUREBANK</h1>
+        </div>
 
         {/* STEP 1: CREDENTIALS */}
         {step === "credentials" && (
-          <>
-            <div className="mb-4">
-              <label className="block text-sm font-medium mb-2">Email</label>
+          <div className="space-y-6">
+            <div className="space-y-2">
+              <label className="text-sm font-semibold text-slate-600 block">Business Email</label>
               <input
                 type="email"
                 placeholder="Enter your email"
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
-                className="w-full border border-gray-300 p-2 rounded text-black focus:outline-none focus:ring-2 focus:ring-blue-500"
+                className="input-field"
                 disabled={loading}
               />
             </div>
 
-            <div className="mb-4">
-              <label className="block text-sm font-medium mb-2">Password</label>
+            <div className="space-y-2">
+              <label className="text-sm font-semibold text-slate-600 block">Password</label>
               <input
                 type="password"
                 placeholder="Enter your password"
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
-                className="w-full border border-gray-300 p-2 rounded text-black focus:outline-none focus:ring-2 focus:ring-blue-500"
+                className="input-field"
                 disabled={loading}
               />
             </div>
 
-            {error && <p className="text-red-500 text-sm mb-4">{error}</p>}
+            {error && (
+              <div className="bg-red-50 border border-red-100 text-red-600 text-sm p-3 rounded-md font-medium">
+                {error}
+              </div>
+            )}
 
             <button
               onClick={handleLoginWithCredentials}
               disabled={loading}
-              className="w-full bg-blue-500 text-white py-2 rounded font-semibold hover:bg-blue-600 disabled:opacity-50"
+              className="btn-primary w-full py-3.5 shadow-md shadow-blue-500/10 active:scale-[0.98]"
             >
-              {loading ? "Logging in..." : "Login"}
+              {loading ? "Authenticating..." : "Login to System"}
             </button>
-
-          </>
+            <p className="text-center text-xs text-slate-400 font-medium">
+              By logging in, you agree to our security protocols.
+            </p>
+          </div>
         )}
 
         {/* STEP 2: OTP VERIFICATION */}
         {step === "otp" && (
-          <>
-            <p className="text-gray-600 text-sm mb-4 text-center">
-              We&apos;ve sent a 6-digit OTP to <strong>{email}</strong>
-            </p>
+          <div className="space-y-8">
+            <div className="text-center">
+              <p className="text-sm text-slate-500 leading-relaxed max-w-[280px] mx-auto">
+                Security code sent to your registered email: <br/><strong className="text-slate-800">{email}</strong>
+              </p>
+            </div>
 
-            <div className="mb-4">
-              <label className="block text-sm font-medium mb-2">
-                Enter OTP Code
+            <div className="space-y-3">
+              <label className="text-sm font-semibold text-slate-600 block text-center uppercase tracking-wider">
+                6-Digit Verification Code
               </label>
               <input
                 type="text"
-                placeholder="000000"
+                placeholder="000 000"
                 value={otp}
-                onChange={(e) => setOtp(e.target.value.slice(0, 6))}
+                onChange={(e) => setOtp(e.target.value.replace(/\D/g, "").slice(0, 6))}
                 maxLength={6}
-                className="w-full border border-gray-300 p-3 rounded text-center text-2xl letter-spacing font-bold text-black focus:outline-none focus:ring-2 focus:ring-blue-500"
+                className="w-full bg-slate-50 border border-slate-200 p-5 rounded-lg text-center text-3xl tracking-[0.5em] font-mono font-bold text-primary focus:outline-none focus:ring-2 focus:ring-blue-500/20 focus:border-primary transition-all"
                 disabled={loading}
               />
             </div>
 
-            {error && <p className="text-red-500 text-sm mb-4">{error}</p>}
+            {error && (
+              <div className="bg-red-50 border border-red-100 text-red-600 text-sm p-3 rounded-md font-medium text-center">
+                {error}
+              </div>
+            )}
 
-            <button
-              onClick={handleVerifyOTP}
-              disabled={loading}
-              className="w-full bg-green-500 text-white py-2 rounded font-semibold hover:bg-green-600 disabled:opacity-50"
-            >
-              {loading ? "Verifying..." : "Verify OTP"}
-            </button>
-
-            <div className="flex gap-2 mt-4">
+            <div className="space-y-3 pt-2">
               <button
-                onClick={handleResendOTP}
+                onClick={handleVerifyOTP}
                 disabled={loading}
-                className="flex-1 border border-blue-500 text-blue-500 py-2 rounded font-semibold hover:bg-blue-50 disabled:opacity-50"
+                className="btn-primary w-full py-4 text-lg"
               >
-                Resend OTP
+                {loading ? "Verifying..." : "Validate Security Code"}
               </button>
 
-              <button
-                onClick={handleBackToCredentials}
-                disabled={loading}
-                className="flex-1 border border-gray-300 text-gray-600 py-2 rounded font-semibold hover:bg-gray-50 disabled:opacity-50"
-              >
-                Back
-              </button>
+              <div className="flex gap-3">
+                <button
+                  onClick={handleResendOTP}
+                  disabled={loading}
+                  className="btn-secondary flex-1 py-3 text-sm"
+                >
+                  Send Again
+                </button>
+
+                <button
+                  onClick={handleBackToCredentials}
+                  disabled={loading}
+                  className="flex-1 border border-slate-200 text-slate-500 py-3 rounded-lg text-sm font-semibold hover:bg-slate-50 transition-colors"
+                >
+                  Back
+                </button>
+              </div>
             </div>
-          </>
+          </div>
         )}
+      </div>
+      <div className="mt-8 text-slate-400 text-xs font-semibold uppercase tracking-widest">
+        Enhanced Security Protocol Enabled
       </div>
     </div>
   );

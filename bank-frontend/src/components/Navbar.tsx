@@ -28,28 +28,34 @@ export default function Navbar() {
   };
 
   return (
-    <div className="flex justify-between items-center p-4 bg-gray-800 text-white">
-      <h1 className="text-lg font-bold">🏦 Bank</h1>
+    <nav className="bg-primary text-white shadow-md">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div className="flex justify-between h-16 items-center">
+          <div className="flex items-center">
+            <span className="text-xl font-bold tracking-tight">SECUREBANK</span>
+          </div>
 
-      <div className="flex items-center gap-4">
-        <span>
-          Mode:{" "}
-          <span
-            className={
-              mode === "vulnerable" ? "text-red-400" : "text-green-400"
-            }
-          >
-            {mode}
-          </span>
-        </span>
+          <div className="flex items-center gap-6">
+            <div className="flex items-center bg-blue-900/50 px-3 py-1.5 rounded-full border border-blue-400/30">
+              <span className="text-xs uppercase tracking-wider font-semibold mr-2 opacity-80">System Mode:</span>
+              <span
+                className={`text-sm font-bold ${
+                  mode === "vulnerable" ? "text-red-300" : "text-green-300"
+                }`}
+              >
+                {mode.toUpperCase()}
+              </span>
+            </div>
 
-        <button
-          onClick={toggleMode}
-          className="bg-blue-500 px-3 py-1 rounded"
-        >
-          Toggle
-        </button>
+            <button
+              onClick={toggleMode}
+              className="bg-white/10 hover:bg-white/20 text-white px-4 py-1.5 rounded-md text-sm font-medium transition-colors border border-white/20"
+            >
+              Toggle Mode
+            </button>
+          </div>
+        </div>
       </div>
-    </div>
+    </nav>
   );
 }
