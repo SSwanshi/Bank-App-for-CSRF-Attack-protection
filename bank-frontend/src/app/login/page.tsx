@@ -154,9 +154,6 @@ export default function LoginPage() {
               {loading ? "Logging in..." : "Login"}
             </button>
 
-            <p className="text-center text-gray-600 text-sm mt-4">
-              Test User: <strong>sarvjeetswanshi25@gmail.com</strong>
-            </p>
           </>
         )}
 
