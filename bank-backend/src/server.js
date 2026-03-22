@@ -55,18 +55,24 @@ export const setMode = (newMode) => {
    🍪 SESSION CONFIG
 ========================= */
 
-app.set("trust proxy", 1);
+app.set("trust proxy", true); // Trust all proxies to assure X-Forwarded-Proto works
+
+// Force secure protocol check if proxy is misconfigured
+app.use((req, res, next) => {
+  req.headers["x-forwarded-proto"] = "https";
+  next();
+});
 
 app.use(
   session({
     secret: process.env.SESSION_SECRET || "dev-secret-key",
     resave: false,
-    saveUninitialized: true, // Changed to true to ensure session is created
+    saveUninitialized: false, // Wait! Changed to false to prevent empty sessions saving
     proxy: true,
     cookie: {
       httpOnly: true,
-      secure: false, // Set to false for local development (HTTP)
-      sameSite: "lax", // Changed from "none" for local development
+      secure: true, // Must be true for cross-domain SameSite=none
+      sameSite: "none", // Must be "none" for cross-domain
       maxAge: 24 * 60 * 60 * 1000, // 24 hours
     },
   })
